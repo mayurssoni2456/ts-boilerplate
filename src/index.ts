@@ -1,15 +1,16 @@
-export default class RateLimiter {
-  private request: Map<string, number> = new Map();
-  private readonly maxRequests: number;
-  private readonly windowMs: number;
+import RateLimiter from './RateLimiter';
 
-  constructor(maxRequest: number, windowms: number) {
-    this.maxRequests = maxRequest;
-    this.windowMs = windowms;
-  }
+const limiter = new RateLimiter(3, 5000);
 
-  isAllowed(userId: string): boolean {
-    console.log(userId);
-    return true;
-  }
-}
+// const user = 'user1';
+
+console.log(limiter.allowRequest('user1'));
+console.log(limiter.allowRequest('user1'));
+console.log(limiter.allowRequest('user1'));
+console.log(limiter.allowRequest('user1'));
+console.log(limiter.allowRequest('user1'));
+
+setTimeout(() => {
+  console.log('after 8 seconds');
+  console.log(limiter.allowRequest('user1'));
+}, 6000);
